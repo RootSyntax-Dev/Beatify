@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Apna Music Player</title>
+    <style>
+      body {
+        font-family: Arial;
+        margin: 20px;
+        background: #f5f5f5;
+      }
+      #playlist div {
+        padding: 10px;
+        margin: 5px;
+        background: white;
+        border-radius: 5px;
+      }
+      #playlist div:hover {
+        background: #e0e0e0;
+      }
+      .playing {
+        background: #b3d9ff !important;
+        font-weight: bold;
+      }
+      button {
+        padding: 8px 15px;
+        margin: 5px;
+        background: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+      }
+      button:hover {
+        background: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Apna Offline Music Player 🎵</h1>
+
+    <input type="file" id="musicFiles" accept="audio/*" multiple />
+    <div style="margin: 15px 0">
+      <audio id="audioPlayer" controls></audio>
+    </div>
+
+    <div>
+      <button id="prevBtn">⏮ Pichla Gana</button>
+      <button id="nextBtn">⏭ Agla Gana</button>
+    </div>
+
+    <h3>Playlist</h3>
+    <div id="playlist"></div>
+
+    <script>
+      // Variables
+      let gaane = [];
+      let abhiKaGana = 0;
+
+      // DOM elements
+      const fileInput = document.getElementById("musicFiles");
+      const player = document.getElementById("audioPlayer");
+      const playlist = document.getElementById("playlist");
+      const pichlaBtn = document.getElementById("prevBtn");
+      const aglaBtn = document.getElementById("nextBtn");
+
+      // File select hone par
+      fileInput.addEventListener("change", function (e) {
+        const files = e.target.files;
+        gaane = [];
+
+        // Har file ke liye
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+
+          // Check karo audio file hai ya nahi
+          if (file.type.startsWith("audio/")) {
+            gaane.push({
+              naam: file.name,
+              url: URL.createObjectURL(file),
+            });
+          }
+        }
+
+        // Playlist dikhao
+        showPlaylist();
+
+        // Pehla gana bajao (agar files hai to)
+        if (gaane.length > 0) {
+          playGana(0);
+        }
+      });
+
+      // Playlist dikhane ka function
+      function showPlaylist() {
+        playlist.innerHTML = "";
+
+        gaane.forEach((gana, index) => {
+          const ganaElement = document.createElement("div");
+          ganaElement.textContent = `${index + 1}. ${gana.naam}`;
+          ganaElement.className = index === abhiKaGana ? "playing" : "";
+
+          // Click karne par woh gana play ho
+          ganaElement.addEventListener("click", () => {
+            playGana(index);
+          });
+
+          playlist.appendChild(ganaElement);
+        });
+      }
+
+      // Gana play karne ka function
+      function playGana(index) {
+        if (index >= 0 && index < gaane.length) {
+          abhiKaGana = index;
+          player.src = gaane[index].url;
+          player.play();
+          showPlaylist();
+        }
+      }
+
+      // Gana khatam hone par agla gana
+      player.addEventListener("ended", () => {
+        playGana((abhiKaGana + 1) % gaane.length);
+      });
+
+      // Pichla/Agla buttons
+      pichlaBtn.addEventListener("click", () => {
+        playGana((abhiKaGana - 1 + gaane.length) % gaane.length);
+      });
+
+      aglaBtn.addEventListener("click", () => {
+        playGana((abhiKaGana + 1) % gaane.length);
+      });
+    </script>
+  </body>
+</html>
