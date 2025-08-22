@@ -1,547 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="utility.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <title>Beatify - Web Player: Music for everyone</title>
-    <link rel="icon" href="Logo/Beatify-Logo-Rounded.png" type="image/png" />
-  </head>
-  <body>
-    <!-- Left Border start here -->
-    <div class="container flex bg-black">
-      <div class="left">
-        <div class="home bg-grey rounded m-1 p-1">
-          <div class="spotify-logo">
-            <span class="spotify-text">Beatify</span>
-          </div>
-          <ul>
-            <li><img src="home.svg" class="invert" alt="home" />Home</li>
-            <li class="search-option" id="openSearchBtn">
-              <img src="search.svg" class="invert" alt="search" />Search
-            </li>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="utility.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Beatify - Web Player: Music for everyone</title>
+  <link rel="icon" href="Logo/Beatify-Logo-Rounded.png" type="image/png" />
+</head>
+
+<body>
+  <div class="container flex bg-black">
+    <div class="left">
+      <div class="close-library-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="home bg-grey rounded m-1 p-1">
+        <div class="spotify-logo">
+          <span class="spotify-text">Beatify</span>
+        </div>
+        <ul>
+          <li id="homeBtn"><img src="home.svg" class="invert" alt="home" />Home</li>
+          <li class="search-option" id="openSearchBtn">
+            <img src="search.svg" class="invert" alt="search" />Search
+          </li>
+        </ul>
+      </div>
+
+      <div class="library bg-grey rounded m-1 p-1">
+        <div class="heading">
+          <h2>Your Library</h2>
+          <button class="add-playlist" id="add-playlist-btn" title="Create a new playlist">+</button>
+        </div>
+        <div class="playlists-container">
+          <h4>Your Playlists</h4>
+          <ul id="playlistsList">
           </ul>
         </div>
-
-        <div class="library bg-grey rounded m-1 p-1">
-          <div class="heading">
-            <h2>Your Library</h2>
-            <button class="add-playlist" id="add-playlist-btn">+</button>
-          </div>
-          <input
-            type="file"
-            id="song-upload-input"
-            accept="audio/*"
-            multiple
-            style="display: none"
-          />
-          <div class="songList">
-            <ul id="playList"></ul>
-          </div>
-
-          <!-- Footer -->
-          <div class="footer">
-            <div class="footer-links">
-              <a href="https://www.spotify.com/in-en/legal/"
-                ><span>Legal</span></a
-              >
-              <a href="https://www.spotify.com/in-en/safetyandprivacy/"
-                ><span>Privacy Center</span></a
-              >
-              <a href="https://www.spotify.com/in-en/legal/privacy-policy/"
-                ><span>Privacy Policy</span></a
-              >
-              <a href="https://www.spotify.com/in-en/legal/cookies-policy/"
-                ><span>Cookies</span></a
-              >
-              <a href="https://www.spotify.com/in-en/legal/privacy-policy/#s3"
-                ><span>About Ads</span></a
-              >
-              <a href="https://www.spotify.com/in-en/accessibility/"
-                ><span>Accessibility</span></a
-              >
-            </div>
-            <div class="footer-lang">
-              <select>
-                <option>English</option>
-                <option>Hindi</option>
-                <option>Español</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Left Border end here -->
-      <!-- Right Border start here -->
-      <div class="right bg-grey rounded">
-        <div class="header">
-          <div class="nav">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24">
-              <path
-                d="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z"
-                stroke="#ffffff"
-              />
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24">
-              <path
-                d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z"
-                stroke="#ffffff"
-              />
-            </svg>
-          </div>
-          <div class="buttons">
-            <button class="signupbtn">Sign up</button>
-            <button class="loginbtn">Log in</button>
-          </div>
+        <hr style="border-color: #222; margin: 10px 0;">
+        <div class="songList">
+          <h4>All Songs</h4>
+          <ul id="playList"></ul>
         </div>
 
-        <div class="popularArtists">
-          <h1>Popular Artists</h1>
-          <div class="cardContainer">
-            <a
-              href="https://www.google.com/search?q=Arijit+Singh+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb5ba2d75eb08a2d672f9b69b7"
-                  alt="Arijit Singh"
-                />
-                <h2>Arijit Singh</h2>
-                <p>Popular Indian Singer</p>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/search?q=Diljit+Dosanjh+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da845bd3fc52a142f8f043e7ffe6"
-                  alt="Diljit Dosanjh"
-                />
-                <h2>Diljit Dosanjh</h2>
-                <p>Punjabi superstar</p>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/search?q=Shreya+Ghoshal+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84f2836295d5df39844017c8a3"
-                  alt="Shreya Ghoshal"
-                />
-                <h2>Shreya Ghoshal</h2>
-                <p>Queen of Melody</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Kanika+kapoor+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb4ac8ab7f87a3c6cd69a49b00"
-                  alt="Kanika kapoor"
-                />
-                <h2>Kanika kapoor</h2>
-                <p>Queen of Bollywood</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Jasmine+Sandlas+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab67616100005174b4d994376ba6f0cbecce53b2"
-                  alt="Jasmine Sandlas"
-                />
-                <h2>Jasmine Sandlas</h2>
-                <p>Queen of Romance</p>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/search?q=Atif+Aslam+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebc40600e02356cc86f0debe84"
-                  alt="Atif Aslam"
-                />
-                <h2>Atif Aslam</h2>
-                <p>Pakistani rockstar</p>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/search?q=Karan+Aujla+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb2a354a64d9c5c602db0be2a4"
-                  alt="Karan Aujla"
-                />
-                <h2>Karan Aujla</h2>
-                <p>Latest Punjabi sensation</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Sunidhi+Chauhan+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eba45f7ef3e1c982461f2dad6b"
-                  alt="Sunidhi Chauhan"
-                />
-                <h2>Sunidhi Chauhan</h2>
-                <p>Versatile Bollywood playback singer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Honey+Singh+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8414c394250e4f7422f340a7d1"
-                  alt="Honey Singh"
-                />
-                <h2>Honey Singh</h2>
-                <p>Pioneering Punjabi rapper</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Badshah+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb7b386b1320742bd6686854e7"
-                  alt="Badshah"
-                />
-                <h2>Badshah</h2>
-                <p>Popular Indian rapper and producer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Neha+Kakkar+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da847725cb48385b97ed44665281"
-                  alt="Neha Kakkar"
-                />
-                <h2>Neha Kakkar</h2>
-                <p>Bollywood's most loved voice</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Darshan+Raval+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eba80a803733f6a070e8f873fb"
-                  alt="Darshan Raval"
-                />
-                <h2>Darshan Raval</h2>
-                <p>Youth music icon</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Rahat+Fateh+Ali+Khan+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebac45eaf028dc58810df0f382"
-                  alt="Rahat Fateh Ali Khan"
-                />
-                <h2>Rahat Fateh Ali Khan</h2>
-                <p>Sufi and Qawwali maestro</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Kailash+Kher+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebc6d179e514b5cfe685f19a2e"
-                  alt="Kailash Kher"
-                />
-                <h2>Kailash Kher</h2>
-                <p>Soulful Indian folk singer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Armaan+Malik+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebc5911f22814f270d5004ae53"
-                  alt="Armaan Malik"
-                />
-                <h2>Armaan Malik</h2>
-                <p>Youth heartthrob and singer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Jubin+Nautiyal+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebc58e9665446297c3be1a0ae0"
-                  alt="Jubin Nautiyal"
-                />
-                <h2>Jubin Nautiyal</h2>
-                <p>Romantic voice of Bollywood</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Guru+Randhawa+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000f178763eb4c279c361127cd79700"
-                  alt="Guru Randhawa"
-                />
-                <h2>Guru Randhawa</h2>
-                <p>Popular Punjabi pop singer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Tony+Kakkar+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8461600e9fb6aee06f8c995681"
-                  alt="Tony Kakkar"
-                />
-                <h2>Tony Kakkar</h2>
-                <p>Bollywood music composer and singer</p>
-              </div>
-            </a>
-
-            <a
-              href="https://www.google.com/search?q=Jasleen+Royal+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb654603f76991dc1275e67d39"
-                  alt="Jasleen Royal"
-                />
-                <h2>Jasleen Royal</h2>
-                <p>Independent music sensation</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=B+Praak+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5ebfd469e9e949eab38a6169a42"
-                  alt="B Praak"
-                />
-                <h2>B Praak</h2>
-                <p>Renowned Punjabi playback singer</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Bohemia+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb85f5d8c78e98ec56acc20343"
-                  alt="Bohemia"
-                />
-                <h2>Bohemia</h2>
-                <p>King of Punjabi Rap</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Hardy+Sandhu+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da846d1d2eee5f34791027c61148"
-                  alt="Hardy Sandhu"
-                />
-                <h2>Hardy Sandhu</h2>
-                <p>Popular Punjabi singer and actor</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Jassi+Gill+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb4fabb1f855e1a661fc28495a"
-                  alt="Jassi Gill"
-                />
-                <h2>Jassi Gill</h2>
-                <p>Punjabi singer and actor</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Ammy+Virk+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da846117f23526cab260e3102d4f"
-                  alt="Ammy Virk"
-                />
-                <h2>Ammy Virk</h2>
-                <p>Popular Punjabi singer and film actor</p>
-              </div>
-            </a>
-            <a
-              href="https://www.google.com/search?q=Garry+Sandhu+singer"
-              target="_blank"
-            >
-              <div class="card">
-                <img
-                  src="https://i.scdn.co/image/ab6761610000e5eb1437169a2779d39c51775b04"
-                  alt="Garry Sandhu"
-                />
-                <h2>Garry Sandhu</h2>
-                <p>Renowned Punjabi singer</p>
-              </div>
-            </a>
-
-            <!-- our bhi anchors add karne hai -->
-          </div>
-        </div>
-        <div class="simple-playbar">
-          <div class="left">
-            <p id="song-title"></p>
-          </div>
-
-          <div class="center">
-            <button id="prev-btn" class="spotify-button" title="Previous">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                <path d="M6 19l8.5-7L6 5v14zm9.5-14h2v14h-2V5z" />
-              </svg>
-            </button>
-
-            <button
-              id="play-btn"
-              class="spotify-button play-button"
-              title="Play"
-            >
-              <svg
-                id="play-icon"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="white"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </button>
-
-            <button id="next-btn" class="spotify-button" title="Next">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
-                <path d="M16 5v14l-8.5-7L16 5zm-9.5 0h2v14h-2V5z" />
-              </svg>
-            </button>
-
-            <span id="current-time">0:00</span>
-            <input type="range" id="progress" value="0" />
-            <span id="duration">0:00</span>
-          </div>
-
-          <div class="right">
-            <div class="main-volume-control">
-              <span id="volume-icon">🔊</span>
-              <input
-                type="range"
-                id="volume"
-                min="0"
-                max="1"
-                step="0.01"
-                value="1"
-              />
-            </div>
-          </div>
-
-          <audio id="audio-player"></audio>
-        </div>
-      </div>
-    </div>
-    <!-- new code sign up and log in -->
-    <div id="signupModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button" data-modal="signupModal">&times;</span>
-        <h2>Sign Up</h2>
-        <form id="signupForm">
-          <div class="form-group">
-            <label for="signupUsername">Username:</label>
-            <input type="text" id="signupUsername" required />
-          </div>
-          <div class="form-group">
-            <label for="signupEmail">Email:</label>
-            <input type="email" id="signupEmail" required />
-          </div>
-          <div class="form-group">
-            <label for="signupPassword">Password:</label>
-            <input type="password" id="signupPassword" required />
-          </div>
-          <div class="form-group">
-            <label for="signupConfirmPassword">Confirm Password:</label>
-            <input type="password" id="signupConfirmPassword" required />
-          </div>
-          <button type="submit">Sign Up</button>
-        </form>
       </div>
     </div>
 
-    <div id="loginModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button" data-modal="loginModal">&times;</span>
-        <h2>Log In</h2>
-        <form id="loginForm">
-          <div class="form-group">
-            <label for="loginUsername">Username/Email:</label>
-            <input type="text" id="loginUsername" required />
+    <div class="right bg-grey rounded">
+      <div class="header">
+        <div class="nav">
+          <div class="hamburger-menu">
+            <i class="fas fa-bars"></i>
           </div>
-          <div class="form-group">
-            <label for="loginPassword">Password:</label>
-            <input type="password" id="loginPassword" required />
+          <svg class="nav-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
+            fill="white" id="backBtn" title="Go back">
+            <path d="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" />
+          </svg>
+          <svg class="nav-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
+            fill="white" id="forwardBtn" title="Go forward">
+            <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" />
+          </svg>
+        </div>
+        <div class="buttons" id="authButtons">
+          <button class="signupbtn">Sign up</button>
+          <button class="loginbtn">Log in</button>
+        </div>
+        <div class="user-profile hidden" id="userProfile">
+          <span id="welcomeMsg"></span>
+          <button class="logout-btn" id="logoutBtn">Log out</button>
+        </div>
+      </div>
+
+      <div class="main-content-wrapper">
+        <div class="search-box hidden" id="searchBox">
+          <input type="text" id="searchInput" placeholder="What do you want to listen to?" />
+          <div class="searchResults" id="searchResults"></div>
+        </div>
+
+        <div class="main-content" id="mainContent">
+          <div class="popularArtists">
+            <div class="artists-header">
+              <h1>Popular Artists</h1>
+              <div class="carousel-nav">
+                <button id="carouselPrev" class="carousel-btn"><i class="fas fa-chevron-left"></i></button>
+                <button id="carouselNext" class="carousel-btn"><i class="fas fa-chevron-right"></i></button>
+              </div>
+            </div>
+            <div class="cardContainer" id="artistCardsContainer">
+            </div>
           </div>
-          <button type="submit">Log In</button>
-        </form>
+        </div>
+
+        <div class="view-content hidden" id="artistSongsSection">
+        </div>
+        <div class="view-content hidden" id="playlistViewSection">
+        </div>
       </div>
     </div>
-  </body>
-  <script src="script.js"></script>
+  </div>
+
+  <div class="playbar-container">
+    <div class="left">
+      <p id="song-title">Select a song to play</p>
+    </div>
+    <div class="center">
+      <div class="controls">
+        <button id="prev-btn" class="spotify-button" title="Previous">
+          <i class="fas fa-step-backward"></i>
+        </button>
+        <button id="play-btn" class="spotify-button play-button" title="Play">
+          <i id="play-icon" class="fas fa-play"></i>
+        </button>
+        <button id="next-btn" class="spotify-button" title="Next">
+          <i class="fas fa-step-forward"></i>
+        </button>
+      </div>
+      <div class="progress-bar-container">
+        <span id="current-time">0:00</span>
+        <input type="range" id="progress" value="0" />
+        <span id="duration">0:00</span>
+      </div>
+    </div>
+    <div class="right">
+      <div class="main-volume-control">
+        <span id="volume-icon"><i class="fas fa-volume-up"></i></span>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" />
+      </div>
+    </div>
+    <audio id="audio-player"></audio>
+  </div>
+
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" data-modal="signupModal">&times;</span>
+      <div class="modal-header">
+        <h2>Sign up to Beatify</h2>
+      </div>
+      <form id="signupForm">
+        <div class="form-group">
+          <label for="signupUsername">Username</label>
+          <input type="text" id="signupUsername" placeholder="Choose a username" required />
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email</label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" required />
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password" required />
+        </div>
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" data-modal="loginModal">&times;</span>
+      <div class="modal-header">
+        <h2>Log in to Beatify</h2>
+      </div>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginUsername">Username or Email</label>
+          <input type="text" id="loginUsername" placeholder="Username or Email" required />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Password" required />
+        </div>
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="createPlaylistModal" class="modal">
+    <div class="modal-content">
+      <span class="close-button" data-modal="createPlaylistModal">&times;</span>
+      <div class="modal-header">
+        <h2>Create new playlist</h2>
+      </div>
+      <form id="createPlaylistForm">
+        <div class="form-group">
+          <label for="playlistName">Playlist Name</label>
+          <input type="text" id="playlistName" placeholder="My Awesome Playlist" required />
+        </div>
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  </div>
+
+  <div id="contextMenu" class="context-menu hidden">
+    <ul>
+      <li id="addToPlaylist">
+        Add to Playlist
+        <i class="fas fa-chevron-right"></i>
+        <ul class="submenu" id="playlistSubmenu">
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <script src="data.js"></script>
   <script src="auth.js"></script>
+  <script src="script.js"></script>
+</body>
+
 </html>
