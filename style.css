@@ -354,9 +354,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 24px;
+  padding: 14px 20px;
   color: white;
   z-index: 1001;
+  border-top: 1px solid var(--light-grey);
   border-top: 1px solid var(--light-grey);
   gap: 20px;
 }
