@@ -110,9 +110,59 @@ const artists = [
   },
   {
     id: 18,
-    name: "Inder Chahal",
-    image: "https://i.scdn.co/image/ab6761610000e5ebc40600e02356cc86f0debe84",
+    name: "Jasmin Sandlas",
+    image: "https://i.scdn.co/image/ab6761610000e5ebb4d994376ba6f0cbecce53b2",
     tagline: "Punjabi singer",
+  },
+  {
+    id: 19,
+    name: "Vishal Dadlani",
+    image: "https://i.scdn.co/image/ab67616d0000b273723ec3c4b6035f1f9837e10e",
+    tagline: "Bollywood composer and singer",
+  },
+  {
+    id: 20,
+    name: "Dhanda nyoliwala",
+    image: "https://i.scdn.co/image/ab6761610000e5eb35c7c32c06fbce57584c6146",
+    tagline: "Rapper and music producer",
+  },
+  {
+    id: 21,
+    name: "Wishal Mishra",
+    image: "https://i.scdn.co/image/ab6761610000e5ebfb13d10be20fdcb5a670f551",
+    tagline: "Indian musical composer",
+  },
+  {
+    id: 22,
+    name: "Madhubanti Bagchi",
+    image: "https://i.scdn.co/image/ab6761610000e5ebd2e401323c697e59fdfd03b8",
+    tagline: "Indian singer and composer",
+  },
+  {
+    id: 23,
+    name: "Sunidhi Chauhan",
+    image:
+      "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84bbad454d3d0d4f926fd29391",
+    tagline: "Indian Playback Singer",
+  },
+  {
+    id: 24,
+    name: "Bhupinder Babbal",
+    image: "https://i.scdn.co/image/ab6761610000e5eb102c7080e73fb9223df047e2",
+    tagline: "Punjabi singer",
+  },
+  {
+    id: 25,
+    name: "Pritam Chakraborty",
+    image:
+      "https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da84a2019bb952b176e4f979d0f0",
+    tagline: "Indian composer and musician",
+  },
+  {
+    id: 26,
+    name: "Yasser Desai",
+    image: "https://i.scdn.co/image/ab6761610000e5eb5343c5fef9594940ce71e096",
+    tagline: "Singer-songwriter",
   },
 ];
 
@@ -141,9 +191,9 @@ const songs = [
   {
     id: 4,
     title: "Faisley",
-    artistId: 15,
+    artistId: 2,
     file: "Faisley.mp3",
-    artist: "B Praak",
+    artist: "Diljit Dosanjh",
   },
   {
     id: 5,
@@ -169,16 +219,16 @@ const songs = [
   {
     id: 8,
     title: "Sweetoo",
-    artistId: 16,
+    artistId: 2,
     file: "Sweetoo.mp3",
-    artist: "Jass Manak",
+    artist: "Diljit Dosanjh",
   },
   {
     id: 9,
     title: "Nasha",
     artistId: 18,
     file: "128-Nasha - Raid 2 128 Kbps.mp3",
-    artist: "Inder Chahal",
+    artist: "Jasmin Sandlas",
   },
   {
     id: 10,
@@ -204,9 +254,9 @@ const songs = [
   {
     id: 13,
     title: "Aaj Ki Raat",
-    artistId: 3,
+    artistId: 22,
     file: "128-Aaj Ki Raat - Stree 2 128 Kbps.mp3",
-    artist: "Shreya Ghoshal",
+    artist: "Madhubanti Bagchi",
   },
   {
     id: 14,
@@ -225,9 +275,9 @@ const songs = [
   {
     id: 16,
     title: "Arjan Vailly",
-    artistId: 2,
+    artistId: 24,
     file: "128-Arjan Vailly - Animal 128 Kbps.mp3",
-    artist: "Diljit Dosanjh",
+    artist: "Bhupinder Babbal",
   },
   {
     id: 17,
@@ -239,9 +289,9 @@ const songs = [
   {
     id: 18,
     title: "Chor Bazari Phir Se",
-    artistId: 3,
+    artistId: 23,
     file: "128-Chor Bazari Phir Se - Bhool Chuk Maaf 128 Kbps.mp3",
-    artist: "Shreya Ghoshal",
+    artist: "Sunidhi Chauhan",
   },
   {
     id: 19,
@@ -253,23 +303,23 @@ const songs = [
   {
     id: 20,
     title: "Hua Main",
-    artistId: 1,
+    artistId: 25,
     file: "128-Hua Main - Animal 128 Kbps.mp3",
-    artist: "Arijit Singh",
+    artist: "Pritam Chakraborty",
   },
   {
     id: 21,
     title: "Hum Toh Deewane",
-    artistId: 1,
+    artistId: 26,
     file: "128-Hum Toh Deewane - Yasser Desai 128 Kbps.mp3",
-    artist: "Arijit Singh",
+    artist: "Yasser Desai",
   },
   {
     id: 22,
     title: "Ishq Jaisa Kuch",
-    artistId: 3,
+    artistId: 19,
     file: "128-Ishq Jaisa Kuch - Fighter 128 Kbps.mp3",
-    artist: "Shreya Ghoshal",
+    artist: "Vishal Dadlani & Shilpa Rao",
   },
   {
     id: 23,
@@ -281,9 +331,9 @@ const songs = [
   {
     id: 24,
     title: "Sher Khul Gaye",
-    artistId: 1,
+    artistId: 19,
     file: "128-Sher Khul Gaye - Fighter 128 Kbps.mp3",
-    artist: "Arijit Singh",
+    artist: "Vishal Dadlani & Vishal-Shekhar",
   },
   {
     id: 25,
@@ -302,9 +352,9 @@ const songs = [
   {
     id: 27,
     title: "Ilzaam",
-    artistId: 4,
+    artistId: 21,
     file: "320-Ilzaam - Jewel Thief The Heist Begins 320 Kbps.mp3",
-    artist: "Karan Aujla",
+    artist: "Wishal Mishra",
   },
   {
     id: 28,
@@ -323,9 +373,9 @@ const songs = [
   {
     id: 30,
     title: "Russian Bandana",
-    artistId: 4,
+    artistId: 20,
     file: "Russian_Bandana_Dhanda_Nyoliwala.mp3",
-    artist: "Karan Aujla",
+    artist: "Dhanda nyoliwala",
   },
   {
     id: 31,

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="utility.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Beatify - Web Player: Music for everyone</title>
   <link rel="icon" href="Logo/Beatify-Logo-Rounded.png" type="image/png" />
@@ -56,14 +56,11 @@
           <div class="hamburger-menu">
             <i class="fas fa-bars"></i>
           </div>
-          <svg class="nav-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
-            fill="white" id="backBtn" title="Go back">
-            <path d="M15.293 3.293 6.586 12l8.707 8.707 1.414-1.414L9.414 12l7.293-7.293-1.414-1.414z" />
-          </svg>
-          <svg class="nav-arrow" xmlns="http://www.w3.org/2000/svg" width="20" height="24" viewBox="0 0 24 24"
-            fill="white" id="forwardBtn" title="Go forward">
-            <path d="M7.293 4.707 14.586 12l-7.293 7.293 1.414 1.414L17.414 12 8.707 3.293 7.293 4.707z" />
-          </svg>
+          <!-- Navigation Buttons -->
+          <div class="nav-arrow">
+            <button id="backBtn" class="back-Btn"><i class="fas fa-chevron-left"></i></button>
+            <button id="forwardBtn" class="forward-Btn"><i class="fas fa-chevron-right"></i></button>
+          </div>
         </div>
         <div class="buttons" id="authButtons">
           <button class="signupbtn">Sign up</button>
@@ -85,16 +82,15 @@
           <div class="popularArtists">
             <div class="artists-header">
               <h1>Popular Artists</h1>
-              <div class="carousel-nav">
-                <button id="carouselPrev" class="carousel-btn"><i class="fas fa-chevron-left"></i></button>
-                <button id="carouselNext" class="carousel-btn"><i class="fas fa-chevron-right"></i></button>
-              </div>
+
             </div>
+            <!-- Artist Cards Container -->
             <div class="cardContainer" id="artistCardsContainer">
             </div>
           </div>
         </div>
 
+        <!-- Dynamic Content Views -->
         <div class="view-content hidden" id="artistSongsSection">
         </div>
         <div class="view-content hidden" id="playlistViewSection">
@@ -103,10 +99,18 @@
     </div>
   </div>
 
+  <!-- Updated Playbar -->
   <div class="playbar-container">
-    <div class="left">
-      <p id="song-title">Select a song to play</p>
+    <!-- Left: Song Info -->
+    <div class="song-info">
+      <img id="song-cover" src="https://placehold.co/60x60/181818/b3b3b3?text=Beatify" alt="Song Cover" />
+      <div class="song-details">
+        <p id="song-title">Select a song to play</p>
+        <span id="song-artist">Artist</span>
+      </div>
     </div>
+
+    <!-- Center: Controls -->
     <div class="center">
       <div class="controls">
         <button id="prev-btn" class="spotify-button" title="Previous">
@@ -121,19 +125,29 @@
       </div>
       <div class="progress-bar-container">
         <span id="current-time">0:00</span>
-        <input type="range" id="progress" value="0" />
+        <!-- Progress bar wrapper for tooltip -->
+        <div class="slider-wrapper" id="progress-wrapper">
+          <input type="range" id="progress" value="0" />
+        </div>
         <span id="duration">0:00</span>
       </div>
     </div>
-    <div class="right">
+
+    <!-- Right: Volume -->
+    <div class="right-controls">
       <div class="main-volume-control">
         <span id="volume-icon"><i class="fas fa-volume-up"></i></span>
-        <input type="range" id="volume" min="0" max="1" step="0.01" value="1" />
+        <!-- Volume slider wrapper for tooltip -->
+        <div class="slider-wrapper" id="volume-wrapper">
+          <input type="range" id="volume" min="0" max="1" step="0.01" value="1" />
+        </div>
       </div>
     </div>
     <audio id="audio-player"></audio>
   </div>
 
+
+  <!-- Modals -->
   <div id="signupModal" class="modal">
     <div class="modal-content">
       <span class="close-button" data-modal="signupModal">&times;</span>

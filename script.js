@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const state = {
     songs: [],
     playlists: [],
+    recentlyPlayed: [],
     currentSongIndex: 0,
     isPlaying: false,
     contextMenuSongId: null,
@@ -18,9 +19,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const prevBtn = document.getElementById("prev-btn");
   const nextBtn = document.getElementById("next-btn");
   const playListContainer = document.getElementById("playList");
-  const songTitleEl = document.getElementById("song-title");
   const volumeSlider = document.getElementById("volume");
   const volumeIcon = document.getElementById("volume-icon").querySelector("i");
+
+  // Playbar Info Elements
+  const songTitleEl = document.getElementById("song-title");
+  const songArtistEl = document.getElementById("song-artist");
+  const songCoverEl = document.getElementById("song-cover");
 
   // Views
   const mainContent = document.getElementById("mainContent");
@@ -28,9 +33,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const artistSongsSection = document.getElementById("artistSongsSection");
   const playlistViewSection = document.getElementById("playlistViewSection");
 
-  // Left Panel
+  // Left Panel & Navigation
   const homeBtn = document.getElementById("homeBtn");
   const openSearchBtn = document.getElementById("openSearchBtn");
+  const backBtn = document.getElementById("backBtn");
+  const forwardBtn = document.getElementById("forwardBtn");
+  const songListHeader = document.querySelector(".songList h4");
 
   // Artist Elements
   const artistCardsContainer = document.getElementById("artistCardsContainer");
@@ -60,39 +68,69 @@ document.addEventListener("DOMContentLoaded", () => {
   function initializeApp() {
     state.songs = [...songs];
     loadPlaylists();
-    renderAllSongsInLibrary();
+    loadRecentlyPlayed();
     renderArtists();
     renderPlaylistsInLibrary();
-    loadSong(state.currentSongIndex);
+    renderRecentlyPlayed();
+    if (state.songs.length > 0) {
+      loadSong(0);
+    }
     setupEventListeners();
+
+    // Initial state for history
+    history.replaceState({ view: "mainContent" }, "", "#mainContent");
+    updateNavButtons();
   }
 
-  // --- VIEW MANAGEMENT ---
-  function showView(viewToShow) {
+  // --- VIEW MANAGEMENT & NAVIGATION ---
+  function showView(viewToShow, addToHistory = true) {
     [mainContent, searchBox, artistSongsSection, playlistViewSection].forEach(
       (view) => {
-        if (view.id === viewToShow) {
-          view.classList.remove("hidden");
-        } else {
-          view.classList.add("hidden");
-        }
+        view.classList.toggle("hidden", view.id !== viewToShow);
       }
     );
+
+    if (addToHistory) {
+      history.pushState({ view: viewToShow }, "", `#${viewToShow}`);
+    }
+    updateNavButtons();
+
     if (leftPanel.classList.contains("open")) {
       leftPanel.classList.remove("open");
     }
+  }
+
+  function updateNavButtons() {
+    // This requires a more complex history management than just back/forward buttons
+    // For now, we disable them as the browser handles the history stack
+    backBtn.classList.toggle("disabled", history.length <= 1);
+    forwardBtn.style.opacity = "0.3"; // Forward is harder to manage reliably
   }
 
   // --- AUDIO PLAYER LOGIC ---
   function loadSong(index) {
     state.currentSongIndex = index;
     const song = state.songs[index];
+    if (!song) return;
+
     audio.src = `songs/${song.file}`;
-    songTitleEl.textContent = `${song.title} - ${song.artist}`;
-    updatePlaylistUI(index);
+
+    songTitleEl.textContent = song.title;
+    songArtistEl.textContent = song.artist;
+
+    const artist = artists.find((a) => a.id === song.artistId);
+    songCoverEl.src = artist
+      ? artist.image
+      : "https://placehold.co/60x60/181818/b3b3b3?text=Beatify";
+
+    updatePlaylistUI();
   }
 
   function togglePlay() {
+    if (!audio.src || audio.src.endsWith("#")) {
+      if (state.songs.length > 0) playSongByIndex(0);
+      else return;
+    }
     state.isPlaying = !state.isPlaying;
     if (state.isPlaying) {
       audio.play();
@@ -103,13 +141,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function updatePlayButton() {
-    if (state.isPlaying) {
-      playIcon.classList.remove("fa-play");
-      playIcon.classList.add("fa-pause");
-    } else {
-      playIcon.classList.add("fa-play");
-      playIcon.classList.remove("fa-pause");
-    }
+    playIcon.classList.toggle("fa-play", !state.isPlaying);
+    playIcon.classList.toggle("fa-pause", state.isPlaying);
   }
 
   function playSongByIndex(index) {
@@ -117,6 +150,10 @@ document.addEventListener("DOMContentLoaded", () => {
     state.isPlaying = true;
     audio.play();
     updatePlayButton();
+
+    // Recently Played Logic
+    const songId = state.songs[index].id;
+    addSongToRecentlyPlayed(songId);
   }
 
   function prevSong() {
@@ -131,49 +168,60 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function formatTime(seconds) {
+    if (isNaN(seconds)) return "0:00";
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   }
 
-  // --- UI RENDERING ---
-  function renderAllSongsInLibrary() {
-    playListContainer.innerHTML = "";
-    state.songs.forEach((song, index) => {
-      const li = document.createElement("li");
-      li.className = "songItem";
-      li.textContent = `${song.title} - ${song.artist}`;
-      li.dataset.songIndex = index;
+  function updateProgressBar() {
+    const current = audio.currentTime;
+    const duration = audio.duration;
+    if (!isNaN(duration)) {
+      const percent = (current / duration) * 100;
+      progress.value = current;
 
-      li.addEventListener("click", () => playSongByIndex(index));
+      // 👇 ye line add kar
+      progress.style.setProperty("--value-percent", `${percent}%`);
 
-      li.addEventListener("contextmenu", (e) => {
-        e.preventDefault();
-        state.contextMenuSongId = song.id;
-        showContextMenu(e.pageX, e.pageY);
-      });
-      playListContainer.appendChild(li);
-    });
+      currentTimeEl.textContent = formatTime(current);
+      durationEl.textContent = formatTime(duration);
+    }
   }
+
+  function updateVolumeBar() {
+    const percent = volumeSlider.value * 100;
+
+    // 👇 ye line add kar
+    volumeSlider.style.setProperty("--value-percent", `${percent}%`);
+  }
+
+  // --- UI RENDERING ---
 
   function renderArtists() {
     artistCardsContainer.innerHTML = "";
     artists.forEach((artist) => {
       const card = document.createElement("div");
       card.className = "card";
-      card.innerHTML = `<img src="${artist.image}" alt="${artist.name}" /><h2>${artist.name}</h2><p>${artist.tagline}</p>`;
+      card.innerHTML = `
+      <img src="${artist.image}" alt="${artist.name}" />
+      <div class="artist-info">
+        <h2>${artist.name}</h2>
+        <p>${artist.tagline}</p>
+      </div>
+    `;
       card.addEventListener("click", () => showArtistSongs(artist));
       artistCardsContainer.appendChild(card);
     });
   }
 
-  function updatePlaylistUI(activeIndex) {
-    Array.from(playListContainer.children).forEach((item, index) => {
-      if (index === activeIndex) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
+  function updatePlaylistUI() {
+    const currentSongId = state.songs[state.currentSongIndex]?.id;
+    if (!currentSongId) return;
+
+    Array.from(playListContainer.children).forEach((item) => {
+      const songId = parseInt(item.dataset.songId);
+      item.classList.toggle("active", songId === currentSongId);
     });
   }
 
@@ -230,6 +278,61 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
     showView("artistSongsSection");
+  }
+
+  // --- RECENTLY PLAYED ---
+  function loadRecentlyPlayed() {
+    const recent = localStorage.getItem("beatifyRecentlyPlayed");
+    state.recentlyPlayed = recent ? JSON.parse(recent) : [];
+  }
+
+  function saveRecentlyPlayed() {
+    localStorage.setItem(
+      "beatifyRecentlyPlayed",
+      JSON.stringify(state.recentlyPlayed)
+    );
+  }
+
+  function addSongToRecentlyPlayed(songId) {
+    // Remove if it already exists to move it to the top
+    state.recentlyPlayed = state.recentlyPlayed.filter((id) => id !== songId);
+    // Add to the beginning
+    state.recentlyPlayed.unshift(songId);
+    // Limit to 15 songs
+    state.recentlyPlayed = state.recentlyPlayed.slice(0, 15);
+    saveRecentlyPlayed();
+    renderRecentlyPlayed();
+  }
+
+  function renderRecentlyPlayed() {
+    playListContainer.innerHTML = "";
+    songListHeader.textContent = "Recently Played";
+    if (state.recentlyPlayed.length === 0) {
+      playListContainer.innerHTML = "<li>No recently played songs.</li>";
+      return;
+    }
+
+    state.recentlyPlayed.forEach((songId) => {
+      const song = state.songs.find((s) => s.id === songId);
+      if (song) {
+        const li = document.createElement("li");
+        li.className = "songItem";
+        li.textContent = `${song.title} - ${song.artist}`;
+        li.dataset.songId = song.id;
+
+        li.addEventListener("click", () => {
+          const songIndex = state.songs.findIndex((s) => s.id === songId);
+          if (songIndex !== -1) playSongByIndex(songIndex);
+        });
+        li.addEventListener("contextmenu", (e) => {
+          e.preventDefault();
+          state.contextMenuSongId = song.id;
+          showContextMenu(e.pageX, e.pageY);
+        });
+        playListContainer.appendChild(li);
+      }
+    });
+    updatePlaylistUI();
   }
 
   // --- SEARCH LOGIC ---
@@ -301,7 +404,7 @@ document.addEventListener("DOMContentLoaded", () => {
       playlist.songs.push(songId);
       savePlaylists();
       alert(`Song added to ${playlist.name}`);
-    } else {
+    } else if (playlist) {
       alert("Song is already in this playlist.");
     }
   }
@@ -389,10 +492,9 @@ document.addEventListener("DOMContentLoaded", () => {
       durationEl.textContent = formatTime(audio.duration);
       progress.max = audio.duration;
     });
-    audio.addEventListener("timeupdate", () => {
-      progress.value = audio.currentTime;
-      currentTimeEl.textContent = formatTime(audio.currentTime);
-    });
+    audio.addEventListener("timeupdate", updateProgressBar);
+    audio.addEventListener("loadedmetadata", updateProgressBar);
+
     progress.addEventListener(
       "input",
       () => (audio.currentTime = progress.value)
@@ -400,6 +502,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     volumeSlider.addEventListener("input", () => {
       audio.volume = volumeSlider.value;
+      updateVolumeBar(); // 👈 fill update karega
+
       if (audio.volume === 0) volumeIcon.className = "fas fa-volume-mute";
       else if (audio.volume < 0.5) volumeIcon.className = "fas fa-volume-down";
       else volumeIcon.className = "fas fa-volume-up";
@@ -410,19 +514,30 @@ document.addEventListener("DOMContentLoaded", () => {
     openSearchBtn.addEventListener("click", () => showView("searchBox"));
     searchInput.addEventListener("input", (e) => filterResults(e.target.value));
 
+    backBtn.addEventListener("click", () => history.back());
+    forwardBtn.addEventListener("click", () => history.forward());
+    window.addEventListener("popstate", (e) => {
+      if (e.state && e.state.view) {
+        showView(e.state.view, false);
+      }
+    });
+
     // Artist Carousel
+    // In buttons ko comment kar diya gaya hai kyunki yeh HTML mein maujood nahi hain aur error de rahe the.
+    /*
     carouselNext.addEventListener("click", () => {
       artistCardsContainer.scrollBy({
-        left: artistCardsContainer.clientWidth,
+        left: 300,
         behavior: "smooth",
       });
     });
     carouselPrev.addEventListener("click", () => {
       artistCardsContainer.scrollBy({
-        left: -artistCardsContainer.clientWidth,
+        left: -300,
         behavior: "smooth",
       });
     });
+    */
 
     // Playlist Creation
     addPlaylistBtn.addEventListener(
@@ -461,4 +576,5 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   initializeApp();
+  updateVolumeBar();
 });
