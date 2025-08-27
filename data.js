@@ -170,9 +170,9 @@ const songs = [
   {
     id: 1,
     title: "Aee Jii Oo Jii",
-    artistId: null,
+    artistId: 2,
     file: "Aee Jii Oo Jii.mp3",
-    artist: "Kishor Kumar",
+    artist: "Diljit Dosanjh",
   },
   {
     id: 2,
