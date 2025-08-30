@@ -79,7 +79,7 @@ const artists = [
   },
   {
     id: 13,
-    name: "The Kid Laroi & Justin Bieber",
+    name: "The Kid Laroi",
     image: "https://i.scdn.co/image/ab6761610000517486e362deb9f22566331fbdeb",
     tagline: "Pop collaboration",
   },
