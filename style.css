@@ -802,8 +802,7 @@ input[type="range"]::-moz-range-thumb {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70px; /* 👈 fixed height set */
-    padding: 10px 15px;
+    /* padding: 10px 15px; */
     gap: 10px;
     background: #111; /* 👈 black bar ka bg confirm */
     z-index: 1002;
