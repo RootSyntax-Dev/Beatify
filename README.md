@@ -65,6 +65,5 @@ This project is open-source and available under the MIT License.
 
 **RootSyntax-Dev**
 
----
 
 ⭐ If you like this project, consider giving it a star!
