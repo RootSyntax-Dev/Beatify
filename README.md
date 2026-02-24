@@ -3,7 +3,6 @@
 A clean, modern, and lightweight offline music player built with pure HTML, CSS, and JavaScript.
 Beatify allows users to play and manage audio directly in the browser — no internet required after loading.
 
----
 
 ## ✨ Key Features
 
@@ -13,7 +12,6 @@ Beatify allows users to play and manage audio directly in the browser — no int
 🔁 Loop and shuffle support (optional)
 🎨 Minimal, modern UI inspired by contemporary music apps
 
----
 
 ## 🚀 Built With
 
@@ -21,7 +19,6 @@ Beatify allows users to play and manage audio directly in the browser — no int
 * **CSS3** — Layout, styling, responsiveness
 * **JavaScript (ES6)** — Audio logic and interactivity
 
----
 
 ## ▶️ Getting Started
 
@@ -38,7 +35,6 @@ Run the project:
   OR
 * Use **Live Server** in VS Code
 
----
 
 ## 📸 Preview
 
@@ -46,7 +42,6 @@ Run the project:
 ![Screenshot](Screenshot%202025-07-02%20192702.png)
 ![Screenshot](Screenshot%202025-07-02%20192709.png)
 
----
 
 ## 📁 Project Structure
 
@@ -60,13 +55,11 @@ Beatify/
     └── images/
 ```
 
----
 
 ## 📄 License
 
 This project is open-source and available under the MIT License.
 
----
 
 ## 👨‍💻 Author
 
