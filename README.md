@@ -63,7 +63,7 @@ This project is open-source and available under the MIT License.
 
 ## 👨‍💻 Author
 
-**RootSyntax-Dev**
+**https://github.com/RootSyntax-Dev**
 
 ## 
 ⭐ If you like this project, consider giving it a star!
