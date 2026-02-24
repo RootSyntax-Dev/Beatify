@@ -56,3 +56,11 @@ git add README.md
 git commit -m "Add README file"
 git push
 ```
+
+## 👨‍💻 Author
+
+**RootSyntax-Dev**
+
+---
+
+⭐ If you found this project helpful, consider giving it a star!
